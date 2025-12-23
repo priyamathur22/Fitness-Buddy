@@ -1,0 +1,56 @@
+.page {
+  background: #0f0f0f;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: #1c1c1c;
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 255, 153, 0.15);
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+.card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: #2a2a2a;
+  border: none;
+  color: white;
+  border-radius: 6px;
+}
+
+.card button {
+  width: 100%;
+  padding: 10px;
+  background: #00ff99;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.card button:hover {
+  background: #00cc7a;
+}
+
+.result {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.error {
+  color: #ff4d4d;
+}
