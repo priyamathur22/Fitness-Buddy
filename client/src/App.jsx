@@ -3,15 +3,26 @@ import "./App.css";
 
 function App() {
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [result, setResult] = useState("");
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    setFile(selected);
+    setResult("");
+
+    if (selected) {
+      setPreview(URL.createObjectURL(selected));
+    }
+  };
 
   const scanFood = async () => {
     if (!file) {
-      setResult("Please upload an image first");
+      setResult("Please upload a food image first");
       return;
     }
 
-    setResult("Analyzing image...");
+    setResult("Analyzing...");
 
     const formData = new FormData();
     formData.append("image", file);
@@ -23,26 +34,48 @@ function App() {
       });
 
       const data = await res.json();
-      setResult(`Estimated Calories: ${data.calories} kcal`);
-    } catch (err) {
-      setResult("Error connecting to server");
+
+      if (data.error) {
+        setResult(data.error);
+      } else {
+        setResult(`Estimated Calories: ${data.calories} kcal`);
+      }
+    } catch {
+      setResult("Server error. Try again.");
     }
   };
 
   return (
     <div className="page">
-      <div className="card">
-        <h2>AI Fitness Buddy</h2>
+      <h1 className="title">Fitness Buddy</h1>
 
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+      <div className="upload-box">
+        {!preview && (
+          <label className="upload-label">
+            Upload your food here
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              hidden
+            />
+          </label>
+        )}
 
-        <button onClick={scanFood}>Scan Food</button>
-
-        <p className="result">{result}</p>
+        {preview && (
+          <img
+            src={preview}
+            alt="Food preview"
+            className="preview"
+          />
+        )}
       </div>
+
+      <button className="scan-btn" onClick={scanFood}>
+        Scan Food
+      </button>
+
+      <p className="result">{result}</p>
     </div>
   );
 }
